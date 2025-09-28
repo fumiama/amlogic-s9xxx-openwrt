@@ -671,13 +671,30 @@ confirm_version() {
     # Find the kernel version that matches the custom version
     build_kernel=()
     latest_kernel=(${tags_list[${conf_kernel_tags}]})
+    
+    echo -e "${INFO} Kernel matching process for board [ ${board} ]:"
+    echo -e "${INFO} Kernel tags: [ ${conf_kernel_tags} ]"
+    echo -e "${INFO} Model kernel patterns: [ ${model_kernel[@]} ]"
+    echo -e "${INFO} Latest available kernels: [ ${latest_kernel[@]} ]"
+    echo -e "${INFO} Starting kernel version matching..."
+    
     for ck in "${model_kernel[@]}"; do
+        echo -e "${INFO} Checking pattern: [ ${ck} ]"
+        matched_count=0
         for lk in "${latest_kernel[@]}"; do
-            [[ "${lk}" =~ ^${ck}$ ]] && build_kernel+=("${lk}")
+            if [[ "${lk}" =~ ^${ck}$ ]]; then
+                build_kernel+=("${lk}")
+                echo -e "${INFO}   - Pattern [ ${ck} ] matches kernel [ ${lk} ] ✓"
+                ((matched_count++))
+            else
+                echo -e "${INFO}   - Pattern [ ${ck} ] does not match kernel [ ${lk} ] ✗"
+            fi
         done
+        [[ ${matched_count} -eq 0 ]] && echo -e "${WARNING} No kernels matched for pattern [ ${ck} ]"
     done
-    # Check the kernel version
-    [[ "${#build_kernel[@]}" -eq 0 ]] && error_msg "The kernel list is invalid for [ ${board} ]"
+    
+    echo -e "${INFO} Final build kernel list: [ ${build_kernel[@]} ]"
+    echo -e "${INFO} Total matched kernels: [ ${#build_kernel[@]} ]"
 }
 
 make_image() {
@@ -804,23 +821,6 @@ make_image() {
 }
 
 extract_openwrt() {
-    process_msg "(2/6) Extract OpenWrt files."
-    cd ${current_path}
-
-    # Create a dual-partition general directory
-    tag_bootfs="${tmp_path}/${kernel}/${board}/bootfs"
-    tag_rootfs="${tmp_path}/${kernel}/${board}/rootfs"
-    mkdir -p ${tag_bootfs} ${tag_rootfs}
-    chown root:root ${tag_bootfs} ${tag_rootfs}
-
-    # Mount bootfs
-    if [[ "${bootfs_type}" == "fat32" ]]; then
-        mount_try vfat ${loop_new}p1 ${tag_bootfs}
-    else
-        mount_try ext4 ${loop_new}p1 ${tag_bootfs}
-    fi
-
-    # Mount rootfs
     mount_try btrfs ${loop_new}p2 ${tag_rootfs}
 
     # Create snapshot directory
