@@ -199,7 +199,7 @@ rebuild_firmware() {
         resolveip dnsmasq-full -dnsmasq ipset libipset13 \
         kmod-ipt-ipset \
         kmod-crypto-aead kmod-crypto-authenc kmod-crypto-rng \
-        kmod-crypto-hash kmod-crypto-manager kmod-crypto-null kmod-crypto-pcompress \
+        kmod-crypto-hash kmod-crypto-manager kmod-crypto-null \
         \
         luci luci-base luci-compat luci-i18n-base-zh-cn luci-lib-base luci-lib-docker \
         luci-lib-ip luci-lib-ipkg luci-lib-jsonc luci-lib-nixio luci-mod-admin-full luci-mod-network \
