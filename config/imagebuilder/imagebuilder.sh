@@ -188,18 +188,17 @@ rebuild_firmware() {
         nftables nft-qos kmod-nft-core kmod-nft-fib kmod-nft-nat kmod-nft-netdev kmod-nft-offload \
         iptables-nft iptables-mod-extra iptables-mod-ipopt iptables-mod-tproxy \
         kmod-ipt-core kmod-ipt-extra kmod-ipt-ipopt kmod-ipt-nat kmod-ipt-raw kmod-ipt-tproxy \
-        kmod-netfilter-netlink kmod-nfnetlink kmod-nfnetlink-log kmod-nfnetlink-queue \
         \
         wireguard-tools kmod-wireguard \
         \
-        kmod-tun kmod-inet-diag kmod-netlink-diag kmod-tcp-bbr \
-        tc-full iproute2-full ip-full ss iperf3 \
+        kmod-tun kmod-inet-diag kmod-tcp-bbr \
+        tc-full ip-full ss iperf3 \
         kmod-sched-core kmod-sched-cake kmod-ifb kmod-veth \
         \
         ca-bundle ca-certificates openssl-util libopenssl-conf \
-        resolveip dnsmasq-full ipset libipset13 \
-        kmod-ipt-ipset iptables-mod-ipset \
-        kmod-crypto-aead kmod-crypto-authenc kmod-crypto-iv kmod-crypto-rng \
+        resolveip dnsmasq-full -dnsmasq ipset libipset13 \
+        kmod-ipt-ipset \
+        kmod-crypto-aead kmod-crypto-authenc kmod-crypto-rng \
         kmod-crypto-hash kmod-crypto-manager kmod-crypto-null kmod-crypto-pcompress \
         \
         luci luci-base luci-compat luci-i18n-base-zh-cn luci-lib-base luci-lib-docker \
