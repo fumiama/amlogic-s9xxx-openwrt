@@ -231,7 +231,7 @@ echo -e "${INFO} Server space usage before starting to compile: \n$(df -hT ${mak
 # Perform related operations
 download_imagebuilder
 adjust_settings
-# custom_packages
+custom_packages
 custom_config
 custom_files
 rebuild_firmware
